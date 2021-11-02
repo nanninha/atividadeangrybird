@@ -1,10 +1,11 @@
 const Engine = Matter.Engine;
 const World= Matter.World;
 const Bodies = Matter.Bodies;
+const Constraint= Matter.Constraint;
 
 var engine, world;
 var box1, pig1,ground2;
-var backgroundImg;
+var backgroundImg,novotronco;
 
 function preload() {
     backgroundImg = loadImage("sprites/bg.png");
@@ -15,7 +16,7 @@ function setup(){
     engine = Engine.create();
     world = engine.world;
 
-    
+    novotronco= new Log(230,180,80,PI/2);
     ground = new Ground(600,height,1200,20);
     ground2 = new Ground(200,height,400,400);
     box1 = new Box(700,320,70,70);
@@ -35,6 +36,15 @@ function setup(){
 
     bird = new Bird(100,100);
 
+    var options = {
+        bodyA: bird.body,
+        bodyB: novotronco.body,
+        stiffness: 0.04,
+        leght: 10
+
+    }
+var chain = Constraint.create(options);
+World.add(world, chain);
 }
 
 function draw(){
@@ -58,6 +68,6 @@ function draw(){
     box5.display();
     log4.display();
     log5.display();
-
+    novotronco.display();
     bird.display();
 }
